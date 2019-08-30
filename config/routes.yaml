@@ -5,22 +5,50 @@ homepage:
   path: /
   controller: App\Controller\BlogController::index
 
-article_add:
-  path: /add
-  controller: App\Controller\BlogController::add
+categorypage:
+  path: /category
+  controller: App\Controller\CategoryController::index
+
+category_add:
+  path: /category/add
+  controller: App\Controller\CategoryController::add
+
+category_show:
+  path: /category/show/{id}
+  controller: App\Controller\CategoryController::show
+
+category_edit:
+  path: /category/edit/{id}
+  controller: App\Controller\CategoryController::edit
+  requirements:
+    id: '\d+'
+
+category_remove:
+  path: /category/remove/{id}
+  controller: App\Controller\CategoryController::remove
+  requirements:
+    id: '\d+'
+
+articlepage:
+  path: /article
+  controller: App\Controller\ArticleController::index
+
+article_new:
+  path: /article/add
+  controller: App\Controller\ArticleController::add
 
 article_show:
-  path: /show/{url}
-  controller: App\Controller\BlogController::show
+  path: /article/show/{id}
+  controller: App\Controller\ArticleController::show
 
 article_edit:
-  path: /edit/{id}
-  controller: App\Controller\BlogController::edit
+  path: /article/edit/{id}
+  controller: App\Controller\ArticleController::edit
   requirements:
     id: '\d+'
 
 article_remove:
-  path: /remove/{id}
-  controller: App\Controller\BlogController::remove
+  path: /article/remove/{id}
+  controller: App\Controller\ArticleController::remove
   requirements:
     id: '\d+'
