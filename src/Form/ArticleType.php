@@ -43,13 +43,12 @@ class ArticleType extends AbstractType
                 'attr' => array('type' => 'checkbox','checked'=> "checked"
                 ),
             ))
-            ->add('categories', EntityType::class, [
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'label',
-                'choice_label' => function(Category $category) {
-                    return sprintf('(%d) %s', $category->getId(), $category->getLabel());
+                'choice_label' => function (Category $category) {
+                    return $category->getLabel();
+
                 },
-                'placeholder' => 'Choisir une category'
             ])
         ;
     }

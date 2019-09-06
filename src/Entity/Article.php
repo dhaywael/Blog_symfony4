@@ -7,55 +7,72 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ * Article
+ *
+ * @ORM\Table(name="article")
+ * @ORM\Entity
  */
 class Article
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="articles")
-     */
-    private $categories;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      */
     private $picture;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="content", type="string", length=255, nullable=true)
      */
     private $content;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="publication_date", type="datetime", nullable=true)
      */
     private $publicationDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_update_date", type="datetime", nullable=false)
      */
     private $lastUpdateDate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @var bool
+     *
+     * @ORM\Column(name="is_published", type="boolean", nullable=false)
      */
     private $isPublished;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     */
+    private $category;
+
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,15 +155,16 @@ class Article
     /**
      * @return Collection|Category[]
      */
-    public function getCategories(): Collection
+    public function getCategory()
     {
-        return $this->categories;
+        return $this->category;
     }
 
     public function addCategory(Category $category): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+            $category->setArticles($this);
         }
 
         return $this;
@@ -154,10 +172,28 @@ class Article
 
     public function removeCategory(Category $category): self
     {
-        if ($this->categories->contains($category)) {
-            $this->categories->removeElement($category);
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getArticles() === $this) {
+                $category->setArticles(null);
+            }
         }
 
         return $this;
     }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return "";
+    }
+
+
 }
