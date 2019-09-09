@@ -48,7 +48,9 @@ class ArticleController extends AbstractController
                 $destination,
                 $newFilename
             );
-
+            $article->setPicture($newFilename);
+            $article->setPublicationDate(new \DateTime());
+            $article->setLastUpdateDate(new \DateTime());
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -94,7 +96,7 @@ class ArticleController extends AbstractController
             $article->setPicture($newFilename);
 
 
-
+            $article->setLastUpdateDate(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('article_index');

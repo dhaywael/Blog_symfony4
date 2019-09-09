@@ -52,11 +52,8 @@ nav {
 
 select {
      display: block;
-    width: 5%;
 }
 
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-    position: absolute;
     opacity: 1;
-    pointer-events: none;
 }

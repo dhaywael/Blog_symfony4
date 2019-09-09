@@ -26,18 +26,18 @@ class ArticleType extends AbstractType
             ])
             ->add('title')
             ->add('content')
-            ->add('publicationDate', DateType::class, array(
-                'widget' => 'single_text',
-                'attr' => array('class' => 'datepicker',
-                    'data-format' => 'yyyy-mm-dd',
-                ),
-            ))
-            ->add('lastUpdateDate', DateType::class, array(
-                'widget' => 'single_text',
-                'attr' => array('class' => 'datepicker',
-                    'data-format' => 'yyyy-mm-dd',
-                ),
-            ))
+            /*            ->add('publicationDate', DateType::class, array(
+                           'widget' => 'single_text',
+                           'attr' => array('class' => 'datepicker',
+                               'data-format' => 'yyyy-mm-dd',
+                           ),
+                       ))
+                      ->add('lastUpdateDate', DateType::class, array(
+                           'widget' => 'single_text',
+                           'attr' => array('class' => 'datepicker',
+                               'data-format' => 'yyyy-mm-dd',
+                           ),
+                       ))*/
             ->add('isPublished', CheckboxType::class, array(
                 'required' => false,
                 'attr' => array('type' => 'checkbox','checked'=> "checked"
